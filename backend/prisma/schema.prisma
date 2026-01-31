@@ -1,0 +1,297 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model users {
+  id            Int    @id @default(autoincrement())
+  username      String @unique
+  email         String @unique
+  password_hash String
+
+  full_name    String?
+  avatar_url   String?
+  phone_number String?
+  address      String?
+  city         String?
+  country      String?
+
+  last_login_at     DateTime?
+  login_count       Int       @default(0)
+  email_verified    Boolean   @default(false)
+  email_verified_at DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  sessions         user_sessions[]
+  loginLogs        user_login_logs[]
+  resetLogs        password_reset_logs[]
+  links            links[]
+  roles            user_roles[]
+  pageVisits       page_visits[]         @relation("user_page_visits")
+  campaignsCreated campaigns[]           @relation("campaign_user")
+  posts            posts[]               @relation("post_user")
+  bid              bid[]
+  task             task[]                @relation("Earnertasks")
+  frompayments     payment[]             @relation("Frompayments")
+  topayments       payment[]             @relation("Topayments")
+  wallet           wallet?
+}
+
+model user_sessions {
+  id          Int     @id @default(autoincrement())
+  user_id     Int
+  ip_address  String? @db.Inet
+  mac_address String?
+  device_info String?
+  location    String?
+
+  login_time  DateTime  @default(now())
+  logout_time DateTime?
+
+  is_successful Boolean @default(true)
+  is_unusual    Boolean @default(false)
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model user_login_logs {
+  id          Int      @id @default(autoincrement())
+  user_id     Int
+  login_time  DateTime @default(now())
+  ip_address  String?  @db.Inet
+  mac_address String?
+  device_info String?
+  location    String?
+
+  login_method String?
+  user_agent   String?
+  status       String?
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model password_reset_logs {
+  id           Int       @id @default(autoincrement())
+  user_id      Int
+  reset_token  String
+  expires_at   DateTime
+  requested_at DateTime  @default(now())
+  used_at      DateTime?
+
+  ip_address String? @db.Inet
+  user_agent String?
+  status     String  @default("pending")
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+}
+
+model links {
+  id           Int    @id @default(autoincrement())
+  user_id      Int?
+  original_url String
+  short_code   String @unique
+  short_url    String
+
+  title       String?
+  description String?
+
+  click_count Int       @default(0)
+  is_active   Boolean   @default(true)
+  is_private  Boolean   @default(false)
+  expires_at  DateTime?
+
+  created_at DateTime @default(now())
+  updated_at DateTime @default(now())
+
+  user          users?            @relation(fields: [user_id], references: [id], onDelete: SetNull)
+  clicks        link_click_logs[]
+  campaignLinks campaign_links[]
+  posts         posts[]
+  tasks         task[]
+}
+
+model link_click_logs {
+  id          Int      @id @default(autoincrement())
+  link_id     Int
+  ip_address  String?  @db.Inet
+  mac_address String?
+  device_info String?
+  location    String?
+  referer     String?
+  user_agent  String?
+  clicked_at  DateTime @default(now())
+
+  link links @relation(fields: [link_id], references: [id], onDelete: Cascade)
+}
+
+model roles {
+  id          Int     @id @default(autoincrement())
+  name        String  @unique
+  description String?
+
+  users user_roles[]
+}
+
+model user_roles {
+  user_id Int
+  role_id Int
+
+  user users @relation(fields: [user_id], references: [id], onDelete: Cascade)
+  role roles @relation(fields: [role_id], references: [id], onDelete: Cascade)
+
+  @@id([user_id, role_id])
+}
+
+model banned_ips {
+  id         Int       @id @default(autoincrement())
+  ip_address String    @unique @db.Inet
+  reason     String?
+  banned_at  DateTime  @default(now())
+  expires_at DateTime?
+}
+
+model page_visits {
+  id      String @id @default(dbgenerated("gen_random_uuid()")) @db.Uuid
+  user_id Int?
+  user    users? @relation("user_page_visits", fields: [user_id], references: [id], onDelete: SetNull)
+
+  path         String
+  referrer     String?
+  utm_source   String?
+  utm_medium   String?
+  utm_campaign String?
+
+  time_spent Int     @default(0)
+  screen     String?
+  user_agent String?
+  ip_address String? @db.Inet
+
+  visited_at DateTime @default(now())
+
+  @@index([user_id], name: "idx_page_visits_user_id")
+  @@map("page_visits")
+}
+
+model campaigns {
+  id      Int    @id @default(autoincrement())
+  user_id Int?
+  user    users? @relation("campaign_user", fields: [user_id], references: [id], onDelete: SetNull)
+
+  name        String
+  description String?
+  start_date  DateTime? @db.Date
+  end_date    DateTime? @db.Date
+  status      String    @default("active")
+  budget      Float?
+  created_at  DateTime  @default(now())
+  quantity    Int       @default(0)
+
+  campaign_links campaign_links[]
+  posts          posts[]
+  bids           bid[]
+  tasks          task[]
+
+  @@index([user_id], name: "idx_campaigns_user_id")
+  @@map("campaigns")
+}
+
+model campaign_links {
+  campaign_id Int
+  campaign    campaigns @relation(fields: [campaign_id], references: [id], onDelete: Cascade)
+
+  link_id Int
+  link    links @relation(fields: [link_id], references: [id], onDelete: Cascade)
+
+  @@id([campaign_id, link_id])
+  @@map("campaign_links")
+}
+
+model posts {
+  id      Int    @id @default(autoincrement())
+  user_id Int?
+  user    users? @relation("post_user", fields: [user_id], references: [id], onDelete: SetNull)
+
+  campaign_id Int?
+  campaign    campaigns? @relation(fields: [campaign_id], references: [id], onDelete: SetNull)
+
+  link_id   Int?
+  short_url links? @relation(fields: [link_id], references: [id], onDelete: SetNull)
+
+  title   String
+  content String?
+
+  created_at DateTime @default(now())
+
+  @@index([user_id], name: "idx_posts_user_id")
+  @@index([campaign_id], name: "idx_posts_campaign_id")
+  @@index([link_id], name: "idx_posts_link_id")
+  @@map("posts")
+}
+
+model bid {
+  id         Int       @id @default(autoincrement())
+  campaignId Int
+  campaign   campaigns @relation(fields: [campaignId], references: [id])
+  earnerId   Int
+  earner     users     @relation(fields: [earnerId], references: [id])
+  status     String    @default("pending")
+  note       String?
+  createdAt  DateTime  @default(now())
+
+  @@unique([campaignId, earnerId])
+}
+
+model task {
+  id         Int       @id @default(autoincrement())
+  campaignId Int
+  campaign   campaigns @relation(fields: [campaignId], references: [id])
+  earnerId   Int
+  earner     users     @relation("Earnertasks", fields: [earnerId], references: [id])
+  linkId     Int
+  link       links     @relation(fields: [linkId], references: [id])
+  quantity   Int       @default(1)
+  status     String
+  proofUrl   String?
+  note       String?
+  createdAt  DateTime  @default(now())
+  payments   payment[]
+}
+
+model payment {
+  id         Int      @id @default(autoincrement())
+  taskId     Int
+  task       task     @relation(fields: [taskId], references: [id])
+  fromUserId Int
+  fromUser   users    @relation("Frompayments", fields: [fromUserId], references: [id])
+  toUserId   Int
+  toUser     users    @relation("Topayments", fields: [toUserId], references: [id])
+  amount     Int
+  status     String
+  createdAt  DateTime @default(now())
+}
+
+model wallet {
+  id            Int           @id @default(autoincrement())
+  userId        Int           @unique
+  user          users         @relation(fields: [userId], references: [id])
+  balance       Int           @default(0)
+  totalDeposit  Int           @default(0)
+  totalWithdraw Int           @default(0)
+  transactions  transaction[]
+}
+
+model transaction {
+  id          Int      @id @default(autoincrement())
+  walletId    Int
+  wallet      wallet   @relation(fields: [walletId], references: [id])
+  amount      Int
+  type        String
+  description String?
+  createdAt   DateTime @default(now())
+}

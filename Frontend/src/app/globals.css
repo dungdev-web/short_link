@@ -1,0 +1,16 @@
+@import "tailwindcss";
+/* Ví dụ style cho tiptap editor */
+.prose {
+  max-width: 100%;
+  font-family: system-ui, sans-serif;
+  line-height: 1.5;
+  /* các style khác */
+}
+
+.ProseMirror {
+  outline: none;
+}
+
+.ProseMirror p {
+  margin: 0 0 1em 0;
+}
