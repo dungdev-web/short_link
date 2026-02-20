@@ -45,18 +45,39 @@
 
 ## 📁 Project Structure
 
+### Frontend
 ```
-short_link/
-├── 📂 app/                  # Next.js app router
-│   ├── 📂 (auth)/           # Login / Register pages
-│   ├── 📂 dashboard/        # Main dashboard
-│   │   ├── links/           # Link management
-│   │   ├── campaigns/       # Campaign management
-│   │   ├── analytics/       # Stats & charts
-│   │   └── users/           # User management
-├── 📂 components/           # Reusable UI components
-├── 📂 lib/                  # Utilities & API helpers
-└── 📂 public/               # Static assets
+Frontend/
+├── 📂 src/
+│   ├── 📂 app/              # Next.js app router & pages
+│   ├── 📂 config/           # App configuration
+│   ├── 📂 hooks/            # Custom React hooks
+│   ├── 📂 mocks/            # Mock data for testing
+│   ├── 📂 pages/            # Page components
+│   ├── 📂 public/           # Static assets
+│   ├── 📂 services/         # API service layer
+│   └── 📂 types/            # TypeScript type definitions
+├── next.config.ts
+├── tsconfig.json
+└── .env.example
+```
+
+### Backend
+```
+backend/
+├── 📂 prisma/               # Prisma schema & migrations
+├── 📂 src/
+│   ├── 📂 adapter/          # External service adapters
+│   ├── 📂 application/      # Use cases & business logic
+│   ├── 📂 domain/           # Domain models & entities
+│   ├── 📂 entrypoint/       # App entry (server setup)
+│   ├── 📂 infrastructure/   # DB & external integrations
+│   ├── 📂 interfaces/       # Controllers & routes
+│   ├── 📂 shared/           # Shared utilities
+│   └── 📂 tests/            # Unit & integration tests
+├── jest.config.js
+├── tsconfig.json
+└── .env.example
 ```
 
 ---
