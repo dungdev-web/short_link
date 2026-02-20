@@ -14,22 +14,22 @@
 
 ---
 
-## ✨ Features
+## Features
 
 | Feature | Description |
 |---|---|
-| 🔗 **Short Link** | Generate short URLs instantly |
-| ✏️ **Custom Alias** | Personalize your short link slug |
-| ⏰ **Link Expiration** | Set expiry date for links |
-| 📋 **Link Management** | Full CRUD — create, edit, delete links |
-| 📊 **Analytics** | Track clicks, visits, and user behavior |
-| 📣 **Campaign Tracking** | Group links under campaigns |
-| 🖼️ **QR Code** | Auto-generate QR code for every link |
-| 👤 **User Management** | User accounts & access control |
+|  **Short Link** | Generate short URLs instantly |
+|  **Custom Alias** | Personalize your short link slug |
+|  **Link Expiration** | Set expiry date for links |
+|  **Link Management** | Full CRUD — create, edit, delete links |
+|  **Analytics** | Track clicks, visits, and user behavior |
+|  **Campaign Tracking** | Group links under campaigns |
+|  **QR Code** | Auto-generate QR code for every link |
+|  **User Management** | User accounts & access control |
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
@@ -82,7 +82,7 @@ backend/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -95,7 +95,7 @@ backend/
 ```bash
 # Clone the repository
 git clone https://github.com/dungdev-web/short_link.git
-cd short_link
+cd frontend && cd backend
 
 # Install dependencies
 npm install
@@ -107,9 +107,18 @@ cp .env.example .env.local
 ### Environment Variables
 
 ```env
-DATABASE_URL=postgresql://user:password@localhost:5432/shortlink
-NEXTAUTH_SECRET=your_secret
-NEXTAUTH_URL=http://localhost:3000
+Frontend:
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
+NEXT_PUBLIC_USE_MOCK=false
+```
+```env
+Backend:
+DATABASE_URL=postgres://postgres:123@localhost:5432/project_shortlink
+BASE_URL=http://localhost:3000
+JWT_SECRET=your-key
+PORT=3000
+EMAIL_USER=
+EMAIL_PASS=
 ```
 
 ### Run Development Server
@@ -122,7 +131,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 📊 Entity Overview
+## Entity Overview
 
 ```
 User ──── Campaign ──── Link ──── Visit
@@ -140,20 +149,10 @@ User ──── Campaign ──── Link ──── Visit
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-> Coming soon...
-
----
-
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
+<img src="https://cv-five-beige.vercel.app/short-link.png"/>
 
 ---
 
-<div align="center">
 
-Made with ❤️ by [Lưu Đức Dũng](https://github.com/dungdev-web)
-
-</div>
