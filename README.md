@@ -151,7 +151,7 @@ User ──── Campaign ──── Link ──── Visit
 
 ## Screenshots
 
-<img src="[https://cv-five-beige.vercel.app/realtim-manage.png](https://cv-five-beige.vercel.app/short-link.png)"/>
+<img src="https://cv-five-beige.vercel.app/realtim-manage.png"/>
 
 ---
 
