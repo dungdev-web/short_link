@@ -14,7 +14,7 @@
 
 ---
 
-## ✨ Features
+## Features
 
 | Feature | Description |
 |---|---|
@@ -29,7 +29,7 @@
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 ### Frontend
 ![React](https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=react&logoColor=black)
@@ -107,12 +107,13 @@ cp .env.example .env.local
 ### Environment Variables
 
 ```env
-``frontend
+ ***Frontend
 NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
 NEXT_PUBLIC_USE_MOCK=false
 EMAIL_USER=
 EMAIL_PASS=
-``
+ ***Frontend
+
 ```
 
 ### Run Development Server
