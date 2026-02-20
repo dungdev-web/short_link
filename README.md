@@ -107,13 +107,18 @@ cp .env.example .env.local
 ### Environment Variables
 
 ```env
- ***Frontend
+Frontend:
 NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
 NEXT_PUBLIC_USE_MOCK=false
+```
+```env
+Backend:
+DATABASE_URL=postgres://postgres:123@localhost:5432/project_shortlink
+BASE_URL=http://localhost:3000
+JWT_SECRET=your-key
+PORT=3000
 EMAIL_USER=
 EMAIL_PASS=
- ***Frontend
-
 ```
 
 ### Run Development Server
@@ -126,7 +131,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 ---
 
-## 📊 Entity Overview
+## Entity Overview
 
 ```
 User ──── Campaign ──── Link ──── Visit
@@ -144,20 +149,10 @@ User ──── Campaign ──── Link ──── Visit
 
 ---
 
-## 📸 Screenshots
+## Screenshots
 
-> Coming soon...
-
----
-
-## 📄 License
-
-This project is licensed under the [MIT License](LICENSE).
+<img src="https://cv-five-beige.vercel.app/realtim-manage.png"/>
 
 ---
 
-<div align="center">
 
-Made with ❤️ by [Lưu Đức Dũng](https://github.com/dungdev-web)
-
-</div>
