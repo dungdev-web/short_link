@@ -18,14 +18,14 @@
 
 | Feature | Description |
 |---|---|
-| 🔗 **Short Link** | Generate short URLs instantly |
-| ✏️ **Custom Alias** | Personalize your short link slug |
-| ⏰ **Link Expiration** | Set expiry date for links |
-| 📋 **Link Management** | Full CRUD — create, edit, delete links |
-| 📊 **Analytics** | Track clicks, visits, and user behavior |
-| 📣 **Campaign Tracking** | Group links under campaigns |
-| 🖼️ **QR Code** | Auto-generate QR code for every link |
-| 👤 **User Management** | User accounts & access control |
+|  **Short Link** | Generate short URLs instantly |
+|  **Custom Alias** | Personalize your short link slug |
+|  **Link Expiration** | Set expiry date for links |
+|  **Link Management** | Full CRUD — create, edit, delete links |
+|  **Analytics** | Track clicks, visits, and user behavior |
+|  **Campaign Tracking** | Group links under campaigns |
+|  **QR Code** | Auto-generate QR code for every link |
+|  **User Management** | User accounts & access control |
 
 ---
 
@@ -82,7 +82,7 @@ backend/
 
 ---
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
@@ -95,7 +95,7 @@ backend/
 ```bash
 # Clone the repository
 git clone https://github.com/dungdev-web/short_link.git
-cd short_link
+cd frontend && cd backend
 
 # Install dependencies
 npm install
@@ -107,9 +107,12 @@ cp .env.example .env.local
 ### Environment Variables
 
 ```env
-DATABASE_URL=postgresql://user:password@localhost:5432/shortlink
-NEXTAUTH_SECRET=your_secret
-NEXTAUTH_URL=http://localhost:3000
+``frontend
+NEXT_PUBLIC_API_BASE_URL=http://localhost:3000
+NEXT_PUBLIC_USE_MOCK=false
+EMAIL_USER=
+EMAIL_PASS=
+``
 ```
 
 ### Run Development Server
