@@ -4,7 +4,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/entrypoint/server.js"
+    "start": "node src/entrypoint/server.js",
+    "dev":"nodemon src/entrypoint/server.js"
   },
   "keywords": [],
   "author": "",
